@@ -1,9 +1,9 @@
 
 //"use client";
-import React from 'react';
-var CryptoJS = require("crypto-js");
+import React, { use } from 'react';
 import style from './ProductItemTile.module.css';
 import Helper from '../Helper';
+import Authorize from '../Authorize';
 
 interface Product {
     id: string;
@@ -29,26 +29,35 @@ function buildDomain() {
     return url;
 }
 
+
 function buildProductURL() {
     const productURL = buildDomain() +  'products?ids='  + productID + '&siteId=' + siteId;
     return productURL;
 }
-var authorizeURL = buildDomain() + '/shopper/auth/v1/organizations/f_ecom_zzrl_059/oauth2/authorize?redirect_uri=`http://localhost:3000/callback&response_type=code&client_id=aeef000c-c4c6-4e7e-96db-a98ee36c6292&hint=guest&code_challenge=TCPh5VMsjmw1iUwMYa_Yxpp7gHVNhBddsYARWdKQLYg`';
+
+//var authorizeURL = buildDomain() + '/shopper/auth/v1/organizations/f_ecom_zzrl_059/oauth2/authorize?redirect_uri=`http://localhost:3000/callback&response_type=code&client_id=aeef000c-c4c6-4e7e-96db-a98ee36c6292&hint=guest&code_challenge=TCPh5VMsjmw1iUwMYa_Yxpp7gHVNhBddsYARWdKQLYg`';
 
 const ProductItemTile = async () => {
-  const AuthorizationToken = process.env.Authorization;
-  const productURL = buildProductURL();
+  ///const AuthorizationToken = process.env.Authorization;
 
-  var verifier = Helper.base64URL(Helper.generateCodeVerifier());
-  var challenge = Helper.base64URL(Helper.generateCodeChallenge(verifier));
+  console.log('GetAuthorize');
+
+  var authorize = new Authorize();
+  const authParam = await authorize.getAuth();
+  var AuthorizationToken = 'Beraer ' + await authorize.getToken(authParam);
+
+  var productURL = buildProductURL();
+  console.log(AuthorizationToken);
 
   const res = await fetch(productURL, {
-    headers: {'Authorization': AuthorizationToken},
-    'cache': 'no-store'
+     headers: {'Authorization': AuthorizationToken},
+     'cache': 'no-store'
   });
 
   const productJSON: ProductRes[] = await res.json();
-  console.log('productList', productJSON);
+  console.log(productJSON);
+
+  return ;
   const productList = productJSON.data;
   const productItem = productList[0];
   const imageGroups = productItem.imageGroups;
