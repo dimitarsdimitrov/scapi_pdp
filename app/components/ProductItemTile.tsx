@@ -29,35 +29,34 @@ function buildDomain() {
     return url;
 }
 
-
 function buildProductURL() {
     const productURL = buildDomain() +  'products?ids='  + productID + '&siteId=' + siteId;
     return productURL;
 }
 
-//var authorizeURL = buildDomain() + '/shopper/auth/v1/organizations/f_ecom_zzrl_059/oauth2/authorize?redirect_uri=`http://localhost:3000/callback&response_type=code&client_id=aeef000c-c4c6-4e7e-96db-a98ee36c6292&hint=guest&code_challenge=TCPh5VMsjmw1iUwMYa_Yxpp7gHVNhBddsYARWdKQLYg`';
+async function doAuthorize() {
+    var authorize = new Authorize();
+    const authParam = await authorize.getAuth();
+    process.env.Authorization = await authorize.getToken(authParam);
+    const AuthorizationToken = process.env.Authorization;
+
+    return AuthorizationToken;
+}
 
 const ProductItemTile = async () => {
-  ///const AuthorizationToken = process.env.Authorization;
-
-  console.log('GetAuthorize');
-
-  var authorize = new Authorize();
-  const authParam = await authorize.getAuth();
-  var AuthorizationToken = 'Beraer ' + await authorize.getToken(authParam);
-
-  var productURL = buildProductURL();
-  console.log(AuthorizationToken);
+  var AuthorizationToken = await doAuthorize();
+  var productURL = 'https://kv7kzm78.api.commercecloud.salesforce.com/product/shopper-products/v1/organizations/f_ecom_zzrl_059/products?ids=test-productId1,' + productID + '&siteId=RefArch' ;//  buildProductURL();
 
   const res = await fetch(productURL, {
-     headers: {'Authorization': AuthorizationToken},
+      'headers': {
+         Authorization: AuthorizationToken
+      },
      'cache': 'no-store'
   });
 
   const productJSON: ProductRes[] = await res.json();
   console.log(productJSON);
 
-  return ;
   const productList = productJSON.data;
   const productItem = productList[0];
   const imageGroups = productItem.imageGroups;
