@@ -4,7 +4,6 @@ import Helper from "../app/Helper";
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import Layout from '../app/layout';
 
-
 interface Product {
     id: string;
     brand: string;
@@ -58,15 +57,23 @@ export default function Page({
   productJSON,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
+    
+      <main className="font-sans antialiased text-gray-600 min-h-full flex flex-col">
+        <header></header>
+          <div className="relative mx-auto mt-20 w-full max-w-container px-4 sm:px-6 lg:px-8">
+              <ProductItemTile productJSON={productJSON} />
+          </div>
+        <footer></footer>
+      </main>
+  
+  )
+}
 
-      <div className="font-sans antialiased text-gray-600 min-h-full flex flex-col">
-      <header></header>
-        <div className="relative mx-auto mt-20 w-full max-w-container px-4 sm:px-6 lg:px-8">
-            <ProductItemTile productJSON={productJSON} />
-        </div>
-      <footer></footer>
-    </div>
-
+Page.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+        {page}
+    </Layout>
   )
 }
 
