@@ -1,7 +1,21 @@
 var CryptoJS = require("crypto-js");
 
 class Helper {
-    // Simple function
+
+    static buildDomain() {
+        const domain = process.env.domain;
+        const shortCode = process.env.SFCC_SCAPI_SHORTCODE;
+        const url = 'https://' + shortCode + '.' + domain;
+
+        return url;
+    }
+
+    static buildProductURL(productID) {
+        const siteId = process.env.siteId;
+        const productURL = this.buildDomain() +  'products?ids='  + productID + '&siteId=' + siteId;
+        return productURL;
+    }
+
     static generateRandomString(length) {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

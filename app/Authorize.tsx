@@ -1,20 +1,19 @@
 import Helper from './Helper';
 
-//var clientId = process.env.client_id;
-//var verifier = null;// Helper.base64URL(Helper.generateCodeVerifier());
-//var challenge = null;//Helper.base64URL(Helper.generateCodeChallenge(verifier));
 
-class Authorize  {
+class Authorize {
     clientId: string;
     verifier: string;
     challenge: string;
     channelId: string;
+    debug: boolean;
 
     constructor() {
         this.clientId = process.env.client_id;
         this.channelId = process.env.siteId;
         this.verifier = Helper.base64URL(Helper.generateCodeVerifier());
         this.challenge = Helper.base64URL(Helper.generateCodeChallenge(this.verifier));
+        this.debug = false;
     }
 
     async getAuth(): any { 
@@ -33,6 +32,7 @@ class Authorize  {
       
         var authorizeURL = 'https://kv7kzm78.api.commercecloud.salesforce.com/shopper/auth/v1/organizations/f_ecom_zzrl_059/oauth2/authorize?'
         + new URLSearchParams(searchParams);
+        var debug = this.debug;
 
         const authorizeRes = await fetch(authorizeURL , {
               method: "GET",  // *GET, POST, PUT, DELETE, etc.
@@ -44,7 +44,9 @@ class Authorize  {
               }
           }).then((response) => {
                 const locationHeader = response.headers.get("location");
-                console.log("Location header", locationHeader);
+                if (debug) {
+                    console.log("Location header", locationHeader);
+                }
                 return locationHeader;
           }).then((data) => {
               if (data) {

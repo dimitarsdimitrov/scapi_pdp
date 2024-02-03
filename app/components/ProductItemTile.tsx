@@ -17,48 +17,14 @@ interface ProductRes {
 };
 
 const productID = 'ASP-Milk-009';
-const domain = process.env.domain;
-const siteId = process.env.siteId;
-const SFCC_SCAPI_TENANTID =  process.env.SFCC_SCAPI_TENANTID;
 
-function buildDomain() {
-    const domain = process.env.domain;
-    const shortCode = process.env.SFCC_SCAPI_SHORTCODE;
-    const url = 'https://' + shortCode + '.' + domain;
+//const domain = process.env.domain;
+//const siteId = process.env.siteId;
+///const SFCC_SCAPI_TENANTID =  process.env.SFCC_SCAPI_TENANTID;
 
-    return url;
-}
 
-function buildProductURL() {
-    const productURL = buildDomain() +  'products?ids='  + productID + '&siteId=' + siteId;
-    return productURL;
-}
-
-async function doAuthorize() {
-    var authorize = new Authorize();
-    const authParam = await authorize.getAuth();
-    process.env.Authorization = await authorize.getToken(authParam);
-    const AuthorizationToken = process.env.Authorization;
-
-    return AuthorizationToken;
-}
-
-const ProductItemTile = async () => {
-  var AuthorizationToken = await doAuthorize();
-  var productURL = 'https://kv7kzm78.api.commercecloud.salesforce.com/product/shopper-products/v1/organizations/f_ecom_zzrl_059/products?ids=test-productId1,' + productID + '&siteId=RefArch' ;//  buildProductURL();
-
-  const res = await fetch(productURL, {
-      'headers': {
-         Authorization: AuthorizationToken
-      },
-     'cache': 'no-store'
-  });
-
-  const productJSON: ProductRes[] = await res.json();
-  console.log(productJSON);
-
-  const productList = productJSON.data;
-  const productItem = productList[0];
+const ProductItemTile = async ({productJSON}) => {
+  const productItem = productJSON;
   const imageGroups = productItem.imageGroups;
   const imageLink = productItem.imageGroups[0].images[0].link;
   
