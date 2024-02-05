@@ -16,10 +16,9 @@ export const ProductVariants = ({variants}) => {
         }
 
         return false;
-    }
+   }
 
-
-  return (
+   return (
         <div className="space-x-2 flex text-sm">
             {variants && variants.map(variant => 
                 <label key={variant}>
@@ -31,5 +30,5 @@ export const ProductVariants = ({variants}) => {
             </label>
             )}
         </div>
-  )
+   )
 }

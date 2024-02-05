@@ -2,39 +2,35 @@
 import React, { use } from 'react';
 import style from './ProductItemTile.module.css';
 import { ProductVariants } from './ProductVariants';
-import Helper from '../Helper';
-import Authorize from '../Authorize';
+import { ProductImages } from './ProductImages';
 
-const productID = 'ASP-Milk-009';
+const debug = process.env.debug;
 
-const ProductItemTile = ({productJSON}) => {
+const ProductItemTile = ({productJSON, index}) => {
     const productItem = productJSON;
     const imageGroups = productItem.imageGroups;
-    const imageLink = productItem.imageGroups[0].images[0].link;
+    const imageLink = productItem.imageGroups[0].images[index].link;
     const variants =  productItem.variants;
     const variationAttributes = productItem.variationAttributes;
-  console.log(productJSON);
-    return (
 
+    if (debug) {
+       console.log(productJSON);
+    }
+
+    return (
       <main className="flex font-sans">
             <div className="flex-none w-48 relative">
               <img src={imageLink} alt="" className="absolute inset-0 w-full h-full object-cover"  />
             </div>
 
             <div className="flex-none w-48 relative">
-                  {imageGroups[0].images.map(item => 
-                    <div className="p-2"  key={item}>
-                      <div className="black border border-blue-100">
-                          <img width={195} height={300} src={item.disBaseLink} alt={item.title} />
-                      </div>
-                  </div>
-                  )}
+                 <ProductImages ImageGroups={imageGroups[0]} />
             </div>
 
             <form className="flex-auto p-6">
               <div className="flex flex-wrap">
                 <h1 className="flex-auto text-lg font-semibold text-slate-900">
-                  {productItem.name} ({ JSON.stringify(productItem.variationValues)})
+                  {productItem.name} ({JSON.stringify(productItem.variationValues)})
                 </h1>
                 <div className="text-lg font-semibold text-slate-500">
                   $ {productItem.price} 
@@ -67,8 +63,7 @@ const ProductItemTile = ({productJSON}) => {
                 {productItem.shortDescription}
               </p>
             </form>
-      </main>
-    
+        </main>
       )
 }
 

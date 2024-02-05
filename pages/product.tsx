@@ -8,6 +8,7 @@ interface Product {
     id: string;
     brand: string;
     currency: string;
+    index: number;
 };
 
 interface ProductRes {
@@ -38,34 +39,38 @@ async function fetchProduct(productURL: string, AuthorizationToken: string) {
 
 export const getServerSideProps = (async (context) => {
   var pid;
+  var index = 0;
   if (context && context.query && context.query.pid) {
-      pid =  context.query.pid;
+      pid = context.query.pid;
   }
+
+  if (context && context.query && context.query.index) {
+     index = context.query.index
+  }
+
   console.log('NEW PID: ' + pid) ;
+
   const authorizationToken = await doAuthorize();
   var productURL = Helper.buildProductURL(pid);
   var productJSON = await fetchProduct(productURL, authorizationToken);
-  const errorCode = productJSON ? false : true;
-
-  return { props: { productJSON } };
-
-}) satisfies GetServerSideProps<{ productJSON: ProductRes }>
 
 
+  return { props: { productJSON, index } };
+
+}) satisfies GetServerSideProps<{ productJSON: ProductRes, index:number }>
 
 export default function Page({
-  productJSON,
+  productJSON, index
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     
       <main className="font-sans antialiased text-gray-600 min-h-full flex flex-col">
         <header></header>
           <div className="relative mx-auto mt-20 w-full max-w-container px-4 sm:px-6 lg:px-8">
-              <ProductItemTile productJSON={productJSON} />
+              <ProductItemTile productJSON={productJSON} index={index} />
           </div>
         <footer></footer>
       </main>
-  
   )
 }
 

@@ -1,6 +1,5 @@
 import Helper from './Helper';
 
-
 class Authorize {
     clientId: string;
     verifier: string;
@@ -13,7 +12,7 @@ class Authorize {
         this.channelId = process.env.siteId;
         this.verifier = Helper.base64URL(Helper.generateCodeVerifier());
         this.challenge = Helper.base64URL(Helper.generateCodeChallenge(this.verifier));
-        this.debug = false;
+        this.debug = process.env.debug;
     }
 
     async getAuth(): any { 
@@ -86,6 +85,8 @@ class Authorize {
             .then(data => {
               if (data && data.access_token) {
                   AuthorizationToken += data.access_token;
+                  //console.log(data.refresh_token_expires_in);
+                  process.env.refresh_token_expires_in = data.refresh_token_expires_in;
                   //process.env.Authorization = 'Bearer ' + data.access_token;
               }
           }) 
