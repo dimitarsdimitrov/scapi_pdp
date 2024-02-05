@@ -29,9 +29,9 @@ class Helper {
     static generateCodeVerifier() {
         return this.generateRandomString(96);
     }
-//CryptoJS.enc.Base64
+
     static base64URL(string:string) {
-        return string.toString().replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
+        return CryptoJS.enc.Base64.stringify(string.toString().replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_'));
     }
 
     static generateCodeChallenge(code_verifier: string) {

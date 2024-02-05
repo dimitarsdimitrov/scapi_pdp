@@ -24,6 +24,7 @@ async function fetchProduct(productURL: string, AuthorizationToken: string) {
     });
 
     const productJSON: ProductRes = await res.json();
+    console.log(productJSON);
     return productJSON.data[0];
 }
 
@@ -41,7 +42,6 @@ export const getServerSideProps = (async (context) => {
   const authorizationToken = await doAuthorize();
   var productURL = Helper.buildProductURL(pid.toString());
   var productJSON = await fetchProduct(productURL, authorizationToken);
-
 
   return { props: { productJSON, index } };
 
