@@ -1,5 +1,10 @@
 import Helper from './Helper';
 
+interface MyAuthParams {
+    code: string|null,
+    usid: string|null
+};
+
 class Authorize {
     clientId: string;
     verifier: string;
@@ -8,17 +13,17 @@ class Authorize {
     debug: boolean;
 
     constructor() {
-        this.clientId = process.env.client_id;
-        this.channelId = process.env.siteId;
+        this.clientId = 'aeef000c-c4c6-4e7e-96db-a98ee36c6292';// process.env.client_id;
+        this.channelId = 'RefArch'; //process.env.siteId;
         this.verifier = Helper.base64URL(Helper.generateCodeVerifier());
         this.challenge = Helper.base64URL(Helper.generateCodeChallenge(this.verifier));
-        this.debug = process.env.debug;
+        this.debug = false;// process.env.debug;
     }
 
-    async getAuth(): any { 
-        var params = {
-            code: null,
-            usid: null
+    async getAuth(): Promise<MyAuthParams> { 
+        var params:MyAuthParams = {
+            code: '',
+            usid: ''
         };
 
         var searchParams = {
@@ -59,7 +64,7 @@ class Authorize {
           return params;
      }
 
-     async getToken(params: any): string { 
+     async getToken(params: any): Promise<string> { 
           var AuthorizationToken = 'Bearer ';
           var oauth2TokenURL = 'https://kv7kzm78.api.commercecloud.salesforce.com/shopper/auth/v1/organizations/f_ecom_zzrl_059/oauth2/token?';
 

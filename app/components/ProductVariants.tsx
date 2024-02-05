@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 export const ProductVariants = ({variants}) => {
     const router = useRouter();
 
-    const handleClick = (e) => {
+    const handleClick = (e: React.ChangeEvent<any>) => {
         e.preventDefault();
         var size = e.target.dataset.value;
         const variantItem = variants.filter(function(v) { return size === v.variationValues.size });
