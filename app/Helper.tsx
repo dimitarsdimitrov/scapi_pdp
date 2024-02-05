@@ -39,10 +39,11 @@ class Helper {
         return this.generateRandomString(96);
     }
 
-    static base64URL(string: any) {
+    static base64URL(string: number) {
         return string.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
         //return string.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
     }
+
 
     static generateCodeChallenge(code_verifier:string) {
         return CryptoJS.SHA256(code_verifier);
