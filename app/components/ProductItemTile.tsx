@@ -16,7 +16,7 @@ const ProductItemTile = ({productJSON, index}:{productJSON:Product, index: numbe
     const variationAttributes = productItem.variationAttributes;
   
     if (debug) {
-       console.log(productJSON);
+      /// console.log(productJSON);
     }
 
     return (

@@ -1,5 +1,6 @@
 import Helper from './Helper';
 
+
 interface MyAuthParams {
     code: string|null,
     usid: string|null

@@ -25,6 +25,7 @@ async function fetchProduct(productURL: string, AuthorizationToken: string) {
 
     const productJSON: ProductRes = await res.json();
     console.log(productJSON);
+
     return productJSON.data[0];
 }
 

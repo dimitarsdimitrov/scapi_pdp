@@ -26,8 +26,6 @@ export const ProductImages = ({ImageGroups}:{ImageGroups:SFCCImageGroups}) => {
         return false;
     }
 
-    console.log('ImageGroups', ImageGroups );
-
   return (
      <>
       {ImageGroups && ImageGroups.images.map((item, index) => 
