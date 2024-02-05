@@ -1,8 +1,9 @@
 "use client";
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import { SFCCvariants } from "../../interfaces" ;
 
-export const ProductVariants = ({variants}) => {
+export const ProductVariants = ({variants}:{variants:[SFCCvariants]}) => {
     const router = useRouter();
 
     const handleClick = (e: React.ChangeEvent<any>) => {
@@ -21,7 +22,7 @@ export const ProductVariants = ({variants}) => {
    return (
         <div className="space-x-2 flex text-sm">
             {variants && variants.map(variant => 
-                <label key={variant}>
+                <label key={variant.productId}>
                     <input className="sr-only peer" name="size" type="radio" value={variant.variationValues.size} />
                     <button  data-value={variant.variationValues.size} 
                         onClick={handleClick}

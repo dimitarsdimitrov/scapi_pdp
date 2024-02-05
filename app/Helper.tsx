@@ -1,4 +1,5 @@
 var CryptoJS = require("crypto-js");
+var aa = CryptoJS.enc.Base64;
 
 class Helper {
 
@@ -10,13 +11,13 @@ class Helper {
         return url;
     }
 
-    static buildProductURL(productID) {
+    static buildProductURL(productID:string) {
         const siteId = process.env.siteId;
         const productURL = this.buildDomain() +  'products?ids='  + productID + '&siteId=' + siteId;
         return productURL;
     }
 
-    static generateRandomString(length) {
+    static generateRandomString(length:number) {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         for (var i = 0; i < length; i++) {
@@ -28,12 +29,12 @@ class Helper {
     static generateCodeVerifier() {
         return this.generateRandomString(96);
     }
-
-    static base64URL(string) {
-        return string.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
+//CryptoJS.enc.Base64
+    static base64URL(string:string) {
+        return string.toString().replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
     }
 
-    static generateCodeChallenge(code_verifier) {
+    static generateCodeChallenge(code_verifier: string) {
         return CryptoJS.SHA256(code_verifier);
     }
 };

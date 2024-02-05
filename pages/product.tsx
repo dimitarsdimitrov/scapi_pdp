@@ -3,18 +3,8 @@ import Authorize from '../app/Authorize';
 import Helper from "../app/Helper";
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import Layout from '../app/layout';
-
-interface Product {
-    id: string;
-    brand: string;
-    currency: string;
-    index: number;
-};
-
-interface ProductRes {
-    limit: number;
-    data: Product[];
-};
+import { Product, ProductRes }  from "../interfaces";
+import React, { ReactNode } from 'react';
 
 async function doAuthorize() {
     var authorize = new Authorize();
@@ -33,37 +23,34 @@ async function fetchProduct(productURL: string, AuthorizationToken: string) {
       'cache': 'no-store'
     });
 
-    const productJSON: ProductRes[] = await res.json();
+    const productJSON: ProductRes = await res.json();
     return productJSON.data[0];
 }
 
 export const getServerSideProps = (async (context) => {
-  var pid;
+  var pid = '';
   var index = 0;
   if (context && context.query && context.query.pid) {
-      pid = context.query.pid;
+      pid = context.query.pid.toString();
   }
 
   if (context && context.query && context.query.index) {
-     index = context.query.index
+     index = (context.query.index instanceof Array) ? parseInt(context.query.index[0],10) : parseInt(context.query.index);
   }
 
-  console.log('NEW PID: ' + pid) ;
-
   const authorizationToken = await doAuthorize();
-  var productURL = Helper.buildProductURL(pid);
+  var productURL = Helper.buildProductURL(pid.toString());
   var productJSON = await fetchProduct(productURL, authorizationToken);
 
 
   return { props: { productJSON, index } };
 
-}) satisfies GetServerSideProps<{ productJSON: ProductRes, index:number }>
+}) satisfies GetServerSideProps<{ productJSON: Product, index:number }>
 
 export default function Page({
   productJSON, index
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    
       <main className="font-sans antialiased text-gray-600 min-h-full flex flex-col">
         <header></header>
           <div className="relative mx-auto mt-20 w-full max-w-container px-4 sm:px-6 lg:px-8">
@@ -74,7 +61,7 @@ export default function Page({
   )
 }
 
-Page.getLayout = function getLayout(page) {
+Page.getLayout = function getLayout(page:ReactNode) {
   return (
     <Layout>
         {page}

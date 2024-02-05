@@ -3,16 +3,18 @@ import React, { use } from 'react';
 import style from './ProductItemTile.module.css';
 import { ProductVariants } from './ProductVariants';
 import { ProductImages } from './ProductImages';
+import { Product, ProductRes, SFCCvariants }   from "../../interfaces";
+
 
 const debug = process.env.debug;
 
-const ProductItemTile = ({productJSON, index}) => {
+const ProductItemTile = ({productJSON, index}:{productJSON:Product, index: number}) => {
     const productItem = productJSON;
     const imageGroups = productItem.imageGroups;
     const imageLink = productItem.imageGroups[0].images[index].link;
     const variants =  productItem.variants;
     const variationAttributes = productItem.variationAttributes;
-
+  
     if (debug) {
        console.log(productJSON);
     }
@@ -33,7 +35,7 @@ const ProductItemTile = ({productJSON, index}) => {
                   {productItem.name} ({JSON.stringify(productItem.variationValues)})
                 </h1>
                 <div className="text-lg font-semibold text-slate-500">
-                  $ {productItem.price} 
+                   ${productItem.price.toFixed(2)} 
                 </div>
                 <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">
                   In stock
@@ -60,7 +62,7 @@ const ProductItemTile = ({productJSON, index}) => {
                 </button>
               </div>
               <p className="text-sm text-slate-700">
-                {productItem.shortDescription}
+                  ${productItem.longDescription}
               </p>
             </form>
         </main>
