@@ -4,6 +4,7 @@ import style from './ProductItemTile.module.css';
 import { ProductVariants } from './ProductVariants';
 import { ProductImages } from './ProductImages';
 import { Product, ProductRes, SFCCvariants }   from "../../interfaces";
+import Image from 'next/image';
 
 
 const debug = process.env.debug;
@@ -22,7 +23,7 @@ const ProductItemTile = ({productJSON, index}:{productJSON:Product, index: numbe
     return (
       <main className="flex font-sans">
             <div className="flex-none w-48 relative">
-              <img src={imageLink} alt="" className="absolute inset-0 w-full h-full object-cover"  />
+              <Image  alt="alt"  src={imageLink}   width={395} height={295} className="absolute inset-0 w-full h-full object-cover"  />
             </div>
 
             <div className="flex-none w-48 relative">

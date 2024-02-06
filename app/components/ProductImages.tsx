@@ -2,6 +2,7 @@
 import React from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { SFCCImageGroups }   from "../../interfaces";
+import Image from 'next/image';
 
 const debug = process.env.debug;
 
@@ -31,7 +32,7 @@ export const ProductImages = ({ImageGroups}:{ImageGroups:SFCCImageGroups}) => {
       {ImageGroups && ImageGroups.images.map((item, index) => 
         <div className="p-2"  key={item.title}>
             <div className="black border border-blue-100">
-                <img width={195} height={300} src={item.disBaseLink} alt={item.title}  onClick={handleClick}  data-index={index} />
+                <Image width={195} height={300} src={item.disBaseLink} alt={item.title}  onClick={handleClick}  data-index={index} />
             </div>
         </div>
         )}
