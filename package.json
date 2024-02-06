@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/crypto-js": "^4.2.2",
     "base64url": "^3.0.1",
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",

@@ -1,13 +1,8 @@
 var CryptoJS = require("crypto-js");
-const base64url = require('base64url');
 
-function toBinary(string) {
-  const codeUnits = new Uint16Array(string.length);
-  for (let i = 0; i < codeUnits.length; i++) {
-    codeUnits[i] = string.charCodeAt(i);
-  }
-  return btoa(String.fromCharCode(...new Uint8Array(codeUnits.buffer)));
-}
+import Base64 from 'crypto-js/enc-base64'
+import Utf8 from 'crypto-js/enc-utf8'
+type WordArray = CryptoJS.lib.WordArray;
 
 
 class Helper {
@@ -39,12 +34,15 @@ class Helper {
         return this.generateRandomString(96);
     }
 
-    static base64URL(string: number) {
-        return string.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-        //return string.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
+    static base64URL_s(string: string) {
+         return string.toString().replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');;
     }
 
 
+    static base64URL_w(wordArray: WordArray) {
+        return Base64.stringify(wordArray).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+    }
+ 
     static generateCodeChallenge(code_verifier:string) {
         return CryptoJS.SHA256(code_verifier);
     }

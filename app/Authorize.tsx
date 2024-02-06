@@ -16,8 +16,8 @@ class Authorize {
     constructor() {
         this.clientId = 'aeef000c-c4c6-4e7e-96db-a98ee36c6292';// process.env.client_id;
         this.channelId = 'RefArch'; //process.env.siteId;
-        this.verifier = Helper.base64URL(Helper.generateCodeVerifier());
-        this.challenge = Helper.base64URL(Helper.generateCodeChallenge(this.verifier));
+        this.verifier = Helper.base64URL_s(Helper.generateCodeVerifier());
+        this.challenge = Helper.base64URL_w(Helper.generateCodeChallenge(this.verifier));
         this.debug = false;// process.env.debug;
     }
 
