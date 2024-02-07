@@ -73,8 +73,38 @@ interface ProductRes {
     total: Number;
 };
 
+interface ProductHit {
+    currency: string,
+    productId: string,
+    image: Image,
+    inventory: any,
+    longDescription: string,
+    master: any,
+    minOrderQuantity: Number,
+    productName: string,
+    pageDescription: string,
+    price: Number,
+    pricePerUnit: Number,
+    productPromotions: [Promotion] | undefined,
+    unitMeasure: string,
+    brand: string,
+    variationAttributes: [VariationAttribute],
+    variants: [Variant]
+}
+
+interface SortBy { 
+    id: string
+    label: string
+
+}
+interface ProductHits {
+    hits: [ProductHit]
+    sortingOptions: [SortBy]
+}
+
 
 export type {
+    ProductHits,
     SFCCImageGroups,
     SFCCvariants,
     Variant,

@@ -14,7 +14,7 @@ const ProductItemTile = ({productJSON, index}:{productJSON:Product, index: numbe
     const imageGroups = productItem.imageGroups;
     const imageLink = productItem.imageGroups[0].images[index].link;
     const variants =  productItem.variants;
-    const variationAttributes = productItem.variationAttributes;
+    //const variationAttributes = productItem.variationAttributes;
   
     if (debug) {
       /// console.log(productJSON);
@@ -27,7 +27,7 @@ const ProductItemTile = ({productJSON, index}:{productJSON:Product, index: numbe
             </div>
 
             <div className="flex-none w-48 relative">
-                 <ProductImages ImageGroups={imageGroups[0]} />
+                  <ProductImages ImageGroups={imageGroups[0]} />
             </div>
 
             <form className="flex-auto p-6">
@@ -44,7 +44,7 @@ const ProductItemTile = ({productJSON, index}:{productJSON:Product, index: numbe
               </div>
               <div className="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
                 <div className="space-x-2 flex text-sm">
-                  <ProductVariants variants={variants} />
+                    <ProductVariants variants={variants} />
                 </div>
               </div>
               <div className="flex space-x-4 mb-6 text-sm font-medium">

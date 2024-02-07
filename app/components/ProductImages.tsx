@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { SFCCImageGroups }   from "../../interfaces";
+import { SFCCImageGroups }  from "../../interfaces";
 import Image from 'next/image';
 
 const debug = process.env.debug;
@@ -17,11 +17,11 @@ export const ProductImages = ({ImageGroups}:{ImageGroups:SFCCImageGroups}) => {
         e.preventDefault();
          const currentSearchParams = new URLSearchParams(searchParams);
         if (currentSearchParams.has("index")) {
-            currentSearchParams.set("index", index);
-            router.push(pathname + '?' + currentSearchParams.toString());
+              currentSearchParams.set("index", index);
+              router.push(pathname + '?' + currentSearchParams.toString());
         } else {
-            var newLocation = location + '&index=' + index;
-            router.push(newLocation);
+              var newLocation = location + '&index=' + index;
+              router.push(newLocation);
         }
 
         return false;

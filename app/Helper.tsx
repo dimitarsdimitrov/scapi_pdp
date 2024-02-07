@@ -15,9 +15,15 @@ class Helper {
         return url;
     }
 
+    static buildProductListURL(catId:string) {
+        const siteId = process.env.siteId;
+        const productURL = this.buildDomain() + '/search/shopper-search/v1/organizations/f_ecom_zzrl_059/product-search?q=' + catId + '&siteId=' + siteId + '&expand=prices,images';
+        return productURL;
+    }
+
     static buildProductURL(productID:string) {
         const siteId = process.env.siteId;
-        const productURL = this.buildDomain() +  'products?ids='  + productID + '&siteId=' + siteId;
+        const productURL = this.buildDomain() + '/product/shopper-products/v1/organizations/f_ecom_zzrl_059/products?ids=' + productID + '&siteId=' + siteId;
         return productURL;
     }
 
@@ -35,12 +41,13 @@ class Helper {
     }
 
     static base64URL_s(string: string) {
-         return string.toString().replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');;
+         var res = string.toString().replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+         return res;
     }
 
-
     static base64URL_w(wordArray: WordArray) {
-        return Base64.stringify(wordArray).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+        var res = Base64.stringify(wordArray).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+        return res;
     }
  
     static generateCodeChallenge(code_verifier:string) {
