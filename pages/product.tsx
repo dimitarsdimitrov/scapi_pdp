@@ -1,7 +1,7 @@
 import ProductItemTile from "../app/components/ProductItemTile";
 import Authorize from '../app/Authorize';
 import Helper from "../app/Helper";
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import Layout from '../app/layout';
 import { Product, ProductRes }  from "../interfaces";
 import React, { ReactNode } from 'react';
