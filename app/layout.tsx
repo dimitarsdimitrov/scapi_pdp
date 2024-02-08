@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Link from 'next/link';
 import "./globals.css";
+
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +17,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+  return (<>
+        <div>
+            <ul className="menu menu-vertical lg:menu-horizontal bg-base-200 rounded-box">
+                <li><Link  href={`/list`} >List</Link></li>
+                <li><Link  href={`/product?pid=25591139M`} >Paisley Shirt</Link></li>
+                <li><Link  href={`/product?pid=25518484M`} >Striped Shirt</Link></li>
+            </ul>
+        </div >
+        <div className={inter.className}>
+          {children}
+        </div>
+        </>
   );
 }

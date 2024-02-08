@@ -55,20 +55,17 @@ export default function Page({
   productJSON, index
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-      <main className="font-sans antialiased text-gray-600 min-h-full flex flex-col">
-          <header></header>
-              <div className="relative mx-auto mt-20 w-full max-w-container px-4 sm:px-6 lg:px-8">
-                   <ProductItemTile productJSON={productJSON} index={index} />
-              </div>
-          <footer></footer>
-      </main>
+    <Layout>
+        <div className="relative mx-auto mt-20 w-full max-w-container px-4 sm:px-6 lg:px-8">
+            <ProductItemTile productJSON={productJSON} index={index} />
+        </div>
+    </Layout>
   )
 }
 
 Page.getLayout = function getLayout(page:ReactNode) {
   return (
     <Layout>
-        <Link href={`/list`}>List</Link>
         {page}
     </Layout>
   )

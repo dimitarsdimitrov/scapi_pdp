@@ -1,6 +1,5 @@
 import Helper from './Helper';
 
-
 interface MyAuthParams {
     code: string|null,
     usid: string|null
@@ -91,9 +90,7 @@ class Authorize {
             .then(data => {
               if (data && data.access_token) {
                   AuthorizationToken += data.access_token;
-                  //console.log(data.refresh_token_expires_in);
                   process.env.refresh_token_expires_in = data.refresh_token_expires_in;
-                  //process.env.Authorization = 'Bearer ' + data.access_token;
               }
           }) 
           .catch(error => console.error(error));
