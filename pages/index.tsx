@@ -28,27 +28,35 @@ async function fetchProductList(productListURL: string, AuthorizationToken: stri
  }
  
  export const getServerSideProps = (async (context) => {
+    var sort = '';
+    if (context && context.query && context.query.sort) {
+        sort = context.query.sort.toString();
+    }
 
-   const productListURL = Helper.buildProductListURL('shirt');
-   const authorizationToken = await doAuthorize();
-   const productItems = await fetchProductList(productListURL, authorizationToken);
+    var catId = 'shirt';
+    if (context && context.query && context.query.catId) {
+        catId = context.query.catId.toString();
+    }
 
- 
+    const productListURL = Helper.buildProductListURL(catId, sort);
+    const authorizationToken = await doAuthorize();
+    const productItems = await fetchProductList(productListURL, authorizationToken);
+
    return {
        props: {
-           productItems
+           productItems, sort
        }
    };
  
- }) satisfies GetServerSideProps<{ productItems: ProductHits}>
+ }) satisfies GetServerSideProps<{ productItems: ProductHits, sort: string}>
 
  export default function Page({
-    productItems
+    productItems, sort 
   }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Layout>
         <div className="relative mx-auto mt-20 w-full max-w-container px-4 sm:px-6 lg:px-8">
-            <ProductList productItems={productItems} />
+            <ProductList productItems={productItems} sort={sort} />
         </div>
     </Layout>
     )

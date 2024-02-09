@@ -1,9 +1,7 @@
 var CryptoJS = require("crypto-js");
 
-import Base64 from 'crypto-js/enc-base64'
-import Utf8 from 'crypto-js/enc-utf8'
+import Base64 from 'crypto-js/enc-base64';
 type WordArray = CryptoJS.lib.WordArray;
-
 
 class Helper {
 
@@ -15,15 +13,34 @@ class Helper {
         return url;
     }
 
-    static buildProductListURL(catId:string) {
-        const siteId = process.env.siteId;
-        const productURL = this.buildDomain() + '/search/shopper-search/v1/organizations/f_ecom_zzrl_059/product-search?q=' + catId + '&siteId=' + siteId + '&expand=prices,images';
+    static getTenantId() {
+        const tenantID = 'f_ecom_' + process.env.SFCC_SCAPI_TENANTID || 'f_ecom_zzrl_059';
+
+        return tenantID;
+    }
+
+    static getSiteId() {
+        return  process.env.siteId || 'RefArch';
+    }
+
+    static buildProductListURL(catId: string, sort: string) {
+        const params = new URLSearchParams();
+        params.append("siteId", this.getSiteId());
+        params.append("q", catId);
+        params.append("expand", "prices,images");
+        params.append("sort", sort);
+        // refine price=(0..100) 
+        // refine c_refinementColor=green|red|blue
+        const productURL = this.buildDomain() + '/search/shopper-search/v1/organizations/' + this.getTenantId() + '/product-search?' + params.toString();
         return productURL;
     }
 
     static buildProductURL(productID:string) {
-        const siteId = process.env.siteId;
-        const productURL = this.buildDomain() + '/product/shopper-products/v1/organizations/f_ecom_zzrl_059/products?ids=' + productID + '&siteId=' + siteId;
+        const params = new URLSearchParams();
+        params.append("siteId", this.getSiteId());
+        params.append("ids", productID);
+
+        const productURL = this.buildDomain() + '/product/shopper-products/v1/organizations/' + this.getTenantId()  +'/products?' + params.toString();
         return productURL;
     }
 

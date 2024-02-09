@@ -3,9 +3,8 @@ import React, { use } from 'react';
 import style from './ProductItemTile.module.css';
 import { ProductVariants } from './ProductVariants';
 import { ProductImages } from './ProductImages';
-import { Product, ProductRes, SFCCvariants }   from "../../interfaces";
+import { Product } from "../../interfaces";
 import Image from 'next/image';
-
 
 const debug = process.env.debug;
 
@@ -13,12 +12,7 @@ const ProductItemTile = ({productJSON, index}:{productJSON:Product, index: numbe
     const productItem = productJSON;
     const imageGroups = productItem.imageGroups;
     const imageLink = productItem.imageGroups[0].images[index].link;
-    const variants =  productItem.variants;
-    //const variationAttributes = productItem.variationAttributes;
-  
-    if (debug) {
-      /// console.log(productJSON);
-    }
+    const variants = productItem.variants;
 
     return (
       <main className="flex font-sans">

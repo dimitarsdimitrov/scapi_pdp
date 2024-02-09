@@ -97,11 +97,16 @@ interface SortBy {
     label: string
 
 }
+interface Refinements {
+    attributeId: string,
+    label: string
+    values: []
+}
 interface ProductHits {
     hits: [ProductHit]
-    sortingOptions: [SortBy]
+    sortingOptions: [SortBy],
+    refinements: [Refinements]
 }
-
 
 export type {
     ProductHits,
